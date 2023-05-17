@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Form from './Form';
 import List from './List';
@@ -12,7 +12,16 @@ export interface Todo {
 }
 
 export default function App() {
-  const [todos, setTodos] = useState(Array<Todo>);
+  const [todos, setTodos] = useState((local: string | null) => {
+    local = localStorage.getItem('TODOS');
+    if (local == null) return Array<Todo>;
+
+    return JSON.parse(local);
+  });
+
+  useEffect(() => {
+    localStorage.setItem('TODOS', JSON.stringify(todos));
+  }, [todos]);
 
   function addTodoItem(title: string) {
     setTodos((currentTodos: Array<Todo>) => {
