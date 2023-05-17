@@ -3,7 +3,7 @@ export default function Item(props: any) {
   return (
     <li key={id}>
       <label>
-        {title}
+        <h3>{title}</h3>
         <input
           type="checkbox"
           checked={completed}
